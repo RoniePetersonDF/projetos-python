@@ -1,5 +1,6 @@
 from django.db import models
 from pessoas.models import Pessoa
+from datetime import datetime
 class Receita(models.Model):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
     nome_receita = models.CharField(max_length=200)
@@ -8,4 +9,6 @@ class Receita(models.Model):
     tempo_preparo = models.IntegerField()
     rendimento = models.CharField(max_length=100)
     categoria = models.CharField(max_length=100)
-    data_receita = models.DateTimeField(auto_now_add=True)    
+    data_receita = models.DateTimeField(default=datetime.now, blank=True)    
+    publicada = models.BooleanField(default=False)
+    foto_receita = models.ImageField(upload_to='foto/%d/%m/%Y', blank=True)
