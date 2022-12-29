@@ -55,7 +55,7 @@ def logout(request):
 def dashboard(request):
     if request.user.is_authenticated:
         id = request.user.id
-        receitas = Receita.objects.order_by('-date_receita').filter(pessoa=id)
+        receitas = Receita.objects.order_by('-data_receita').filter(pessoa=id)
         
         dados = { 
             'receitas' : receitas
@@ -80,6 +80,11 @@ def cria_receita(request):
     else:
         return render(request, 'usuarios/cria_receita.html')
 
+def deleta_receita(request, receita_id):
+    receita = get_object_or_404(Receita, pk=receita_id)
+    receita.delete()
+    return redirect('dashboard')
+    
 def campo_vazio(campo):
     return not campo.strip()
 
